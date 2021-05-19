@@ -4,6 +4,7 @@
     --main-color: #000;
     --text-color: #888;
     --link-color: #444;
+    font-size: 16px;
 }
 
 /* ==================== System Dark Mode ==================== */
@@ -21,6 +22,7 @@ img.logo-light {
 
     .field {
         background: #111;
+        transition: all 0.5s ease;
     }
 
     img.logo-dark {
@@ -41,6 +43,7 @@ html {
 
 body {
     margin: 0;
+    width: 100%;
 }
 
 a {
@@ -66,6 +69,7 @@ img.logo {
     justify-content: center;
     align-items: center;
     height: 100vh;
+    box-sizing: border-box;
 }
 
 .content {
@@ -77,6 +81,10 @@ img.logo {
     color: var(--text-color);
 }
 
+.content h2 {
+    margin: 0 1em;
+}
+
 .footer {
     text-align: center;
     position: fixed;
@@ -84,11 +92,25 @@ img.logo {
     font-size: 95%;
 }
 
+/* ==================== Adapt to Reactive Layout ==================== */
+
+@media screen and (max-width: 980px) {
+    :root {
+        font-size: 16px;
+    }
+
+    .field {
+        background-color: azure;
+        transition: all 0.5s ease;
+    }
+}
+
 /* ==================== Background CSS Animation ==================== */
 .field {
     position: fixed;
     width: 100%;
     height: 100%;
+    transition: all 0.5s ease;
 }
 
 .item1 {
@@ -155,7 +177,7 @@ img.logo {
         transform: translateY(0px);
     }
     100% {
-        transform: translateY(-1000px);
+        transform: translateY(-100vh);
         opacity: 0;
     }
 }
@@ -165,7 +187,7 @@ img.logo {
         -webkit-transform: translateY(0px);
     }
     100% {
-        -webkit-transform: translateY(-1000px);
+        -webkit-transform: translateY(-100vh);
         opacity: 0;
     }
 }
