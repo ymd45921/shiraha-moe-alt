@@ -4,6 +4,8 @@
     --main-color: #000;
     --text-color: #888;
     --link-color: #444;
+    --inverse-color: #fff;
+    --main-font: 'PingFang SC', "Open Sans", 'Microsoft YaHei', sans-serif;
     font-size: 16px;
 }
 
@@ -18,6 +20,7 @@ img.logo-light {
         --main-color: #FFF;
         --text-color: #888;
         --link-color: #CCC;
+        --inverse-color: #000;
     }
 
     .field {
@@ -38,7 +41,7 @@ img.logo-light {
 
 html {
     color: var(--text-color);
-    font-family: 'PingFang SC', "Open Sans", 'Microsoft YaHei', sans-serif;
+    font-family: var(--main-font);
 }
 
 body {
@@ -92,6 +95,28 @@ img.logo {
     font-size: 95%;
     margin: 0 auto;
     width: 100%;
+}
+
+button {
+    border: var(--main-color) 2px solid;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    background: transparent;
+    transition: all 0.5s ease;
+    font-family: var(--main-font);
+    margin: 1rem 0;
+}
+
+button i {
+    margin-right: 1rem;
+}
+
+button:hover {
+    border: var(--main-color) 2px solid;
+    background: var(--main-color);
+    color: var(--inverse-color);
+    transition: all 0.5s ease;
 }
 
 /* ==================== Adapt to Reactive Layout ==================== */
