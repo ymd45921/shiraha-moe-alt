@@ -1,3 +1,5 @@
 .idea
-public/
-node_modules/
+/public
+/node_modules/
+!/public/img/logo_dark.svg
+!/public/img/logo_light.svg

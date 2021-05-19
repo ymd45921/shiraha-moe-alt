@@ -6,14 +6,14 @@ var terser = require('gulp-terser');
 
 // 压缩css文件
 const minify_css = () => (
-    gulp.src(['./**/*.css'])
+    gulp.src(['./src/**/*.css'])
         .pipe(minifycss())
         .pipe(gulp.dest('./public'))
 );
 
 // 压缩html文件
 const minify_html = () => (
-    gulp.src(['./**/*.html','!./{lib,lib/**}'])
+    gulp.src(['./src/**/*.html','!./{lib,lib/**}'])
         .pipe(htmlclean())
         .pipe(htmlmin({
             removeComments: true,
@@ -24,22 +24,13 @@ const minify_html = () => (
         .pipe(gulp.dest('./public'))
 )
 
-// 压缩js文件
-const minify_js = () => (
-    gulp.src(['./**/*.js', '!./**/*.min.js','!./{lib,lib/**}'])
-        .pipe(terser())
-        .pipe(gulp.dest('./public'))
-)
-
 module.exports = {
     minify_html: minify_html,
-    minify_css: minify_css,
-    minify_js: minify_js
+    minify_css: minify_css
 };
 gulp.task('one', gulp.parallel(
     minify_html,
-    minify_css,
-    minify_js
+    minify_css
 ))
 
 gulp.task('default', gulp.series('one'));
