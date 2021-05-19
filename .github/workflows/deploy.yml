@@ -1,0 +1,57 @@
+name: Minimize documents and deploy a Github page
+
+on:
+  push: 
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  push:
+    runs-on: ubuntu-18.04
+    if: github.event.repository.owner.id == github.event.sender.id
+
+    steps:
+      - name: Checkout source
+        uses: actions/checkout@v2
+        with:
+          ref: main
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: '12'
+
+      - name: Setup SSH and Git
+        env:
+          SSH_SECRET_KEY: ${{ secrets.SSH_SECRET_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "$SSH_SECRET_KEY" > ~/.ssh/id_rsa
+          chmod 700 ~/.ssh
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan github.com >> ~/.ssh/known_hosts
+          git config --global user.email "i@shiraha.cn"
+          git config --global user.name "NNM Deploy BOT"
+
+      - name: Setup Yarn and Gulp
+        run: |
+          npm install gulp -g
+          npm install yarn -g
+          yarn
+      
+      - name: Minimize and Deploy
+        env:
+          TARGET_REPO: ${{ secrets.TARGET_REPO }}
+          TARGET_BRANCH: ${{ secrets.TARGET_BRANCH }}
+          SITE_CNAME: ${{ secrets.SITE_CNAME }}
+        run: |
+          yarn min
+          cd public
+          git init
+          echo "$SITE_CNAME" > CNAME
+          git add .
+          git commit -m "Automatically generated and updated."
+          git branch -M $TARGET_BRANCH
+          git remote add origin $TARGET_REPO
+          git push -u -f origin $TARGET_BRANCH
